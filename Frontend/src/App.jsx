@@ -22,7 +22,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/admin-signup" element={<AdminSignUp />} />
+        {/* <Route path="/admin-signup" element={<AdminSignUp />} /> */}
         <Route path="/admin-signin" element={<AdminSignIn />} />
 
         {/* Protected Admin Routes */}
@@ -67,4 +67,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

@@ -12,7 +12,24 @@ const AdminHomePage = () => {
   });
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
+  const logout = async () =>{
+    try {
+      
+      localStorage.removeItem('auth_token');
+      navigate("/admin-signin");
 
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/adminLogout`,
+        { withCredentials: true });
+      if (response.status === 200) {
+        navigate("/admin-signin");
+      }
+    } catch (error) {
+      console.error("Logout error:", error.response?.data || error.message);
+      
+    }
+  }
+
+ 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
@@ -35,17 +52,7 @@ const AdminHomePage = () => {
 
     fetchDashboardData();
   }, []);
-  const logout = async () =>{
-    try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/logout`);
-      if (response.status === 200) {
-        navigate("/admin-signin");
-      }
-    } catch (error) {
-      console.error("Logout error:", error.response?.data || error.message);
-      
-    }
-  }
+  
   const cardConfigs = [
     {
       title: "View Certificates",

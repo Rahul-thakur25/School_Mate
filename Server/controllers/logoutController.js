@@ -1,14 +1,21 @@
-const logoutController = (req, res) => {
-    // Clear the cookie storing the authentication token
-    res.clearCookie('auth_token', {
-      httpOnly: true, // Ensures the cookie is sent only over HTTP(S), not accessible via JavaScript
-      secure: process.env.NODE_ENV === 'production', // Ensures the cookie is only sent over HTTPS in production
-      sameSite: 'Strict', // Helps prevent CSRF attacks
-    });
+const logout = (req, res) => {
+    try {
+      // Clear the 'auth_token' cookie
+      res.clearCookie('auth_token', {
+       // httpOnly: true, // Ensures cookie is only accessible by the server
+       // secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+        //sameSite: 'Strict', // Prevent CSRF attacks
+      });
   
-    // Respond with a success message
-    res.status(200).json({ message: 'Logout successful' });
+      console.log("User logged out successfully");
+      
+      // Send a success response
+      res.status(200).json({ message: 'Logged out successfully' });
+    } catch (error) {
+      // Handle unexpected errors
+      console.error("Error during logout:", error.message);
+      res.status(500).json({ message: 'Internal server error' });
+    }
   };
   
-  export default logoutController;
-  
+  export default logout;
